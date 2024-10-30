@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Cadastro</title>
+    <style>
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Testes de Verificação de Cadastro</h2>
+    <div id="resultados"></div>
+
+    <script>
+        // Função para exibir o resultado dos testes
+        function exibirResultado(mensagem, passou) {
+            const resultadosDiv = document.getElementById('resultados');
+            const resultado = document.createElement('p');
+            resultado.className = passou ? 'pass' : 'fail';
+            resultado.textContent = (passou ? '✔️' : '❌') + ' ' + mensagem;
+            resultadosDiv.appendChild(resultado);
+        }
+
+        // Função de teste
+        function teste(mensagem, condicao) {
+            exibirResultado(mensagem, condicao);
+        }
+
+        // Funções de verificação de cadastro
+        function validarNome(nome) {
+            return typeof nome === 'string' && nome.length >= 3;
+        }
+
+       function validarIdade(idade) {
+            return Number.isInteger(idade) && idade >= 18 && idade <= 120;
+        }
+
+        // Executando os testes de verificação
+        try {
+            // Testes de nome
+            teste('O nome "João" é válido', validarNome('João') === true);
+            teste('O nome "Li" é inválido (menos de 3 caracteres)', validarNome('Li') === false);
+
+            
+            // Testes de idade
+            teste('A idade 25 é válida', validarIdade(25) === true);
+            teste('A idade 15 é inválida (menor de 18 anos)', validarIdade(15) === false);
+            teste('A idade 130 é inválida (maior que 120 anos)', validarIdade(130) === false);
+
+        } catch (erro) {
+            exibirResultado('Erro inesperado: ' + erro.message, false);
+        }
+    </script>
+</body>
+</html>
+
